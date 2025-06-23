@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="144" height="144" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ecdc4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="72" cy="72" r="70" fill="url(#bg)" stroke="white" stroke-width="2"/>
+  
+  <!-- Main icon elements -->
+  <g transform="translate(21.599999999999998, 21.599999999999998)">
+    <!-- Plate -->
+    <ellipse cx="50.4" cy="79.2" rx="36" ry="11.52" fill="white" opacity="0.9"/>
+    
+    <!-- Question mark -->
+    <text x="50.4" y="57.6" 
+          font-family="Arial, sans-serif" 
+          font-size="43.199999999999996" 
+          font-weight="bold" 
+          text-anchor="middle" 
+          fill="url(#accent)">?</text>
+    
+    <!-- Utensils -->
+    <g stroke="white" stroke-width="2.88" fill="none" opacity="0.8">
+      <!-- Fork -->
+      <line x1="21.599999999999998" y1="64.8" x2="21.599999999999998" y2="93.60000000000001"/>
+      <line x1="18.72" y1="64.8" x2="18.72" y2="79.2"/>
+      <line x1="24.48" y1="64.8" x2="24.48" y2="79.2"/>
+      
+      <!-- Knife -->
+      <line x1="79.2" y1="64.8" x2="79.2" y2="93.60000000000001"/>
+      <line x1="76.32000000000001" y1="64.8" x2="82.08" y2="70.56"/>
+    </g>
+    
+    <!-- Decorative sparkles -->
+    <g fill="white" opacity="0.6">
+      <circle cx="28.8" cy="36" r="2.16"/>
+      <circle cx="72" cy="28.8" r="2.88"/>
+      <circle cx="14.4" cy="50.4" r="1.44"/>
+      <circle cx="86.39999999999999" cy="50.4" r="2.16"/>
+    </g>
+  </g>
+</svg>

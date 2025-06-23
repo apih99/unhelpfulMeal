@@ -2,13 +2,117 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    
+    <!-- Basic Meta Tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="The Unhelpful Meal Decider - Get bizarrely specific and unhelpful meal suggestions that will leave you questioning everything!" />
+    <meta name="keywords" content="meal decider, food suggestions, random food, meal generator, unhelpful, funny food app" />
+    <meta name="author" content="apih99" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea" />
+    <meta name="background-color" content="#667eea" />
+    <meta name="display" content="standalone" />
+    <meta name="orientation" content="portrait" />
+    
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="UnhelpfulMeal" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    
+    <!-- Windows Meta Tags -->
+    <meta name="msapplication-TileColor" content="#667eea" />
+    <meta name="msapplication-config" content="/unhelpfulMeal/browserconfig.xml" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="The Unhelpful Meal Decider" />
+    <meta property="og:description" content="Get the most absurd meal suggestions that will confuse your hunger rather than satisfy it!" />
+    <meta property="og:url" content="https://apih99.github.io/unhelpfulMeal/" />
+    <meta property="og:image" content="https://apih99.github.io/unhelpfulMeal/icons/icon-512x512.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:site_name" content="The Unhelpful Meal Decider" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Unhelpful Meal Decider" />
+    <meta name="twitter:description" content="Get the most absurd meal suggestions that will confuse your hunger rather than satisfy it!" />
+    <meta name="twitter:image" content="https://apih99.github.io/unhelpfulMeal/icons/icon-512x512.png" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/unhelpfulMeal/manifest.json" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" sizes="16x16" href="/unhelpfulMeal/icons/icon-72x72.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="/unhelpfulMeal/icons/icon-96x96.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="192x192" href="/unhelpfulMeal/icons/icon-192x192.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="/unhelpfulMeal/icons/icon-512x512.svg" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="72x72" href="/unhelpfulMeal/icons/icon-72x72.svg" />
+    <link rel="apple-touch-icon" sizes="96x96" href="/unhelpfulMeal/icons/icon-96x96.svg" />
+    <link rel="apple-touch-icon" sizes="128x128" href="/unhelpfulMeal/icons/icon-128x128.svg" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/unhelpfulMeal/icons/icon-144x144.svg" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/unhelpfulMeal/icons/icon-152x152.svg" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/unhelpfulMeal/icons/icon-192x192.svg" />
+    <link rel="apple-touch-icon" sizes="384x384" href="/unhelpfulMeal/icons/icon-384x384.svg" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/unhelpfulMeal/icons/icon-512x512.svg" />
+    
+    <!-- Preload important resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" />
+    
     <title>The Unhelpful Meal Decider</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/unhelpfulMeal/sw.js')
+            .then(function(registration) {
+              console.log('Service Worker registered successfully:', registration.scope);
+              
+              // Listen for service worker updates
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      // New content is available, prompt user to refresh
+                      console.log('New content available! Please refresh the page.');
+                      // You could show a toast notification here
+                    }
+                  });
+                }
+              });
+            })
+            .catch(function(error) {
+              console.error('Service Worker registration failed:', error);
+            });
+            
+          // Listen for app install prompt
+          let deferredPrompt;
+          window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('PWA install prompt available');
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // You could show an install button here
+            // For now, we'll just store the event for later use
+          });
+          
+          window.addEventListener('appinstalled', (evt) => {
+            console.log('PWA was installed successfully');
+            // Track the installation event if you have analytics
+          });
+        });
+      }
+    </script>
   </body>
 </html>

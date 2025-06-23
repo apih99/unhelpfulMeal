@@ -110,6 +110,10 @@ function App() {
   const [suggestionHistory, setSuggestionHistory] = useState([])
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
   const [dailyCount, setDailyCount] = useState(0)
+  const [isShareOpen, setIsShareOpen] = useState(false)
+  const [deferredPrompt, setDeferredPrompt] = useState(null)
+  const [isInstallable, setIsInstallable] = useState(false)
+  const [isInstalled, setIsInstalled] = useState(false)
 
   // Load daily count from localStorage on component mount
   useEffect(() => {
@@ -131,11 +135,63 @@ function App() {
     }
   }, [])
 
+  // PWA Installation Logic
+  useEffect(() => {
+    // Check if already installed
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+    const isIOSStandalone = window.navigator.standalone === true
+    setIsInstalled(isStandalone || isIOSStandalone)
+
+    // Listen for install prompt
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault()
+      setDeferredPrompt(e)
+      setIsInstallable(true)
+      console.log('PWA install prompt available')
+    }
+
+    // Listen for app installed
+    const handleAppInstalled = () => {
+      setIsInstalled(true)
+      setIsInstallable(false)
+      setDeferredPrompt(null)
+      console.log('PWA was installed successfully')
+    }
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    window.addEventListener('appinstalled', handleAppInstalled)
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+      window.removeEventListener('appinstalled', handleAppInstalled)
+    }
+  }, [])
+
   // Save daily count to localStorage whenever it changes
   useEffect(() => {
     const today = new Date().toDateString()
     localStorage.setItem('unhelpfulMealData', JSON.stringify({ date: today, count: dailyCount }))
   }, [dailyCount])
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return
+
+    // Show the install prompt
+    deferredPrompt.prompt()
+
+    // Wait for the user to respond to the prompt
+    const { outcome } = await deferredPrompt.userChoice
+    
+    if (outcome === 'accepted') {
+      console.log('User accepted the install prompt')
+    } else {
+      console.log('User dismissed the install prompt')
+    }
+
+    // Clear the deferredPrompt
+    setDeferredPrompt(null)
+    setIsInstallable(false)
+  }
 
   const getRandomSuggestion = () => {
     // Prevent multiple clicks during animation
@@ -176,10 +232,70 @@ function App() {
     setIsHistoryOpen(!isHistoryOpen)
   }
 
+  const toggleShare = () => {
+    setIsShareOpen(!isShareOpen)
+  }
+
   const getCounterText = () => {
     if (dailyCount === 0) return ""
     if (dailyCount === 1) return "You've been unhelpfully fed 1 time today"
     return `You've been unhelpfully fed ${dailyCount} times today`
+  }
+
+  const getShareCaption = () => {
+    const captions = [
+      `I asked for meal advice and got: "${currentSuggestion}" 🤷‍♀️`,
+      `The Unhelpful Meal Decider strikes again: "${currentSuggestion}" 😂`,
+      `My dinner plans have been expertly ruined: "${currentSuggestion}" 🍽️`,
+      `Thanks to science, I now know I should eat: "${currentSuggestion}" 🤦‍♀️`,
+      `Breaking: Local person receives world's most unhelpful meal suggestion: "${currentSuggestion}" 📰`,
+      `Update: Still hungry after being told to eat "${currentSuggestion}" 🤷‍♀️`,
+      `Life hack: When hungry, just eat "${currentSuggestion}" (don't actually) 😅`
+    ]
+    return captions[Math.floor(Math.random() * captions.length)]
+  }
+
+  const shareToTwitter = () => {
+    const caption = getShareCaption()
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(caption)}&url=${encodeURIComponent('https://apih99.github.io/unhelpfulMeal/')}&hashtags=UnhelpfulMeal,FoodDecisions,RandomMealGenerator`
+    window.open(url, '_blank')
+  }
+
+  const shareToFacebook = () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://apih99.github.io/unhelpfulMeal/')}&quote=${encodeURIComponent(getShareCaption())}`
+    window.open(url, '_blank')
+  }
+
+  const shareToWhatsApp = () => {
+    const caption = getShareCaption()
+    const url = `https://wa.me/?text=${encodeURIComponent(caption + ' Try it yourself: https://apih99.github.io/unhelpfulMeal/')}`
+    window.open(url, '_blank')
+  }
+
+  const shareToReddit = () => {
+    const caption = getShareCaption()
+    const url = `https://reddit.com/submit?title=${encodeURIComponent('The most unhelpful meal suggestion ever')}&text=${encodeURIComponent(caption + ' Try the Unhelpful Meal Decider: https://apih99.github.io/unhelpfulMeal/')}`
+    window.open(url, '_blank')
+  }
+
+  const copyToClipboard = async () => {
+    const caption = getShareCaption()
+    const textToCopy = `${caption}\n\nTry the Unhelpful Meal Decider: https://apih99.github.io/unhelpfulMeal/`
+    
+    try {
+      await navigator.clipboard.writeText(textToCopy)
+      // Show a temporary success message
+      const originalText = 'Copy Link'
+      const button = document.querySelector('.copy-btn')
+      if (button) {
+        button.textContent = 'Copied! ✓'
+        setTimeout(() => {
+          button.textContent = originalText
+        }, 2000)
+      }
+    } catch (err) {
+      console.error('Failed to copy: ', err)
+    }
   }
 
   return (
@@ -189,6 +305,19 @@ function App() {
           The Unhelpful<br />
           <span className="title-accent">Meal Decider</span>
         </h1>
+        
+        {/* PWA Install Button */}
+        {isInstallable && !isInstalled && (
+          <div className="install-section">
+            <button 
+              className="install-button"
+              onClick={handleInstallClick}
+            >
+              📱 Install App
+            </button>
+            <p className="install-hint">Install for quick access and offline use!</p>
+          </div>
+        )}
         
         {/* Daily Counter */}
         {dailyCount > 0 && (
@@ -209,6 +338,45 @@ function App() {
         >
           What should I eat?
         </button>
+
+        {/* Share Button */}
+        {isRevealed && currentSuggestion !== "Click to discover your unhelpful meal destiny..." && (
+          <div className="share-section">
+            <button 
+              className="share-button"
+              onClick={toggleShare}
+            >
+              Share This Absurdity 📤
+            </button>
+            
+            {isShareOpen && (
+              <div className="share-dropdown">
+                <div className="share-header">
+                  <h4>Spread the Confusion</h4>
+                  <p>Share your unhelpful meal destiny with the world!</p>
+                </div>
+                
+                <div className="share-buttons">
+                  <button className="share-btn twitter" onClick={shareToTwitter}>
+                    🐦 Twitter
+                  </button>
+                  <button className="share-btn facebook" onClick={shareToFacebook}>
+                    📘 Facebook
+                  </button>
+                  <button className="share-btn whatsapp" onClick={shareToWhatsApp}>
+                    💬 WhatsApp
+                  </button>
+                  <button className="share-btn reddit" onClick={shareToReddit}>
+                    🔴 Reddit
+                  </button>
+                  <button className="share-btn copy-btn" onClick={copyToClipboard}>
+                    📋 Copy Link
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* History Section */}
         {suggestionHistory.length > 0 && (
@@ -247,6 +415,9 @@ function App() {
 
         <div className="footer">
           <p>🤷‍♀️ Unhelpfully yours since never</p>
+          {isInstalled && (
+            <p className="pwa-badge">📱 App Mode Active</p>
+          )}
         </div>
       </div>
     </div>

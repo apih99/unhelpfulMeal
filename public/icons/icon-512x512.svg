@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ecdc4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="254" fill="url(#bg)" stroke="white" stroke-width="2"/>
+  
+  <!-- Main icon elements -->
+  <g transform="translate(76.8, 76.8)">
+    <!-- Plate -->
+    <ellipse cx="179.2" cy="281.6" rx="128" ry="40.96" fill="white" opacity="0.9"/>
+    
+    <!-- Question mark -->
+    <text x="179.2" y="204.8" 
+          font-family="Arial, sans-serif" 
+          font-size="153.6" 
+          font-weight="bold" 
+          text-anchor="middle" 
+          fill="url(#accent)">?</text>
+    
+    <!-- Utensils -->
+    <g stroke="white" stroke-width="10.24" fill="none" opacity="0.8">
+      <!-- Fork -->
+      <line x1="76.8" y1="230.4" x2="76.8" y2="332.8"/>
+      <line x1="66.56" y1="230.4" x2="66.56" y2="281.6"/>
+      <line x1="87.04" y1="230.4" x2="87.04" y2="281.6"/>
+      
+      <!-- Knife -->
+      <line x1="281.6" y1="230.4" x2="281.6" y2="332.8"/>
+      <line x1="271.36" y1="230.4" x2="291.84" y2="250.88"/>
+    </g>
+    
+    <!-- Decorative sparkles -->
+    <g fill="white" opacity="0.6">
+      <circle cx="102.4" cy="128" r="7.68"/>
+      <circle cx="256" cy="102.4" r="10.24"/>
+      <circle cx="51.2" cy="179.2" r="5.12"/>
+      <circle cx="307.2" cy="179.2" r="7.68"/>
+    </g>
+  </g>
+</svg>

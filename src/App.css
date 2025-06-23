@@ -107,6 +107,71 @@ body {
   box-shadow: 0 12px 25px rgba(168, 237, 234, 0.4);
 }
 
+/* PWA Install Section Styles */
+.install-section {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.install-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Fredoka', sans-serif;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+  animation: installPulse 2s ease-in-out infinite;
+}
+
+@keyframes installPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+  }
+}
+
+.install-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+  animation: none;
+}
+
+.install-button:active {
+  transform: translateY(-1px) scale(1);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.install-hint {
+  margin: 10px 0 0 0;
+  font-size: 0.9rem;
+  color: #666;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.pwa-badge {
+  font-size: 0.85rem;
+  color: #4ecdc4;
+  margin: 5px 0 0 0;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
 .suggestion-area {
   margin: 40px 0;
   min-height: 120px;
@@ -225,6 +290,177 @@ body {
   90% { transform: translateX(2px) translateY(1px); }
   95% { transform: translateX(-1px) translateY(0); }
   100% { transform: translateX(0) translateY(0); }
+}
+
+/* Share Section Styles */
+.share-section {
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+}
+
+.share-button {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  color: #2d3748;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Fredoka', sans-serif;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(255, 236, 210, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+  backdrop-filter: blur(10px);
+}
+
+.share-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(255, 236, 210, 0.5);
+}
+
+.share-button:active {
+  transform: translateY(0);
+}
+
+.share-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 350px;
+  margin-top: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  animation: shareDropdown 0.3s ease-out;
+  z-index: 10;
+}
+
+@keyframes shareDropdown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.share-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+.share-header h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+.share-header p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.share-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.share-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: 'Fredoka', sans-serif;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 15px rgba(240, 147, 251, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(240, 147, 251, 0.4);
+}
+
+.share-btn:active {
+  transform: translateY(0);
+}
+
+/* Platform-specific colors */
+.share-btn.twitter {
+  background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+  box-shadow: 0 6px 15px rgba(29, 161, 242, 0.3);
+}
+
+.share-btn.twitter:hover {
+  box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+}
+
+.share-btn.facebook {
+  background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
+  box-shadow: 0 6px 15px rgba(24, 119, 242, 0.3);
+}
+
+.share-btn.facebook:hover {
+  box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4);
+}
+
+.share-btn.whatsapp {
+  background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
+  box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+}
+
+.share-btn.whatsapp:hover {
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+}
+
+.share-btn.reddit {
+  background: linear-gradient(135deg, #ff4500 0%, #e03d00 100%);
+  box-shadow: 0 6px 15px rgba(255, 69, 0, 0.3);
+}
+
+.share-btn.reddit:hover {
+  box-shadow: 0 8px 20px rgba(255, 69, 0, 0.4);
+}
+
+.share-btn.copy-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+  grid-column: 1 / -1; /* Span full width */
+}
+
+.share-btn.copy-btn:hover {
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
 }
 
 .footer {
@@ -436,6 +672,15 @@ body {
     margin: 15px 0 8px 0;
   }
 
+  .install-button {
+    font-size: 1rem;
+    padding: 12px 24px;
+  }
+
+  .install-hint {
+    font-size: 0.85rem;
+  }
+
   .history-toggle {
     font-size: 0.9rem;
     padding: 10px 20px;
@@ -467,6 +712,29 @@ body {
   .history-suggestion {
     font-size: 0.95rem;
   }
+
+  .share-button {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .share-dropdown {
+    max-width: 280px;
+    padding: 20px;
+  }
+
+  .share-header h4 {
+    font-size: 1.1rem;
+  }
+
+  .share-header p {
+    font-size: 0.85rem;
+  }
+
+  .share-btn {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -495,6 +763,19 @@ body {
     font-size: 0.85rem;
     padding: 8px 16px;
     margin: 12px 0 6px 0;
+  }
+
+  .install-button {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .install-hint {
+    font-size: 0.8rem;
+  }
+
+  .pwa-badge {
+    font-size: 0.8rem;
   }
 
   .history-toggle {
@@ -526,5 +807,34 @@ body {
 
   .history-timestamp {
     font-size: 0.75rem;
+  }
+
+  .share-button {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+
+  .share-dropdown {
+    max-width: 250px;
+    padding: 15px;
+    margin-top: 10px;
+  }
+
+  .share-header h4 {
+    font-size: 1rem;
+  }
+
+  .share-header p {
+    font-size: 0.8rem;
+  }
+
+  .share-btn {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+    gap: 4px;
+  }
+
+  .share-buttons {
+    gap: 10px;
   }
 }

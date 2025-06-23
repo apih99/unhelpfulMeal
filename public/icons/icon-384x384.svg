@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="384" height="384" viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ecdc4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="192" cy="192" r="190" fill="url(#bg)" stroke="white" stroke-width="2"/>
+  
+  <!-- Main icon elements -->
+  <g transform="translate(57.599999999999994, 57.599999999999994)">
+    <!-- Plate -->
+    <ellipse cx="134.39999999999998" cy="211.20000000000002" rx="96" ry="30.72" fill="white" opacity="0.9"/>
+    
+    <!-- Question mark -->
+    <text x="134.39999999999998" y="153.60000000000002" 
+          font-family="Arial, sans-serif" 
+          font-size="115.19999999999999" 
+          font-weight="bold" 
+          text-anchor="middle" 
+          fill="url(#accent)">?</text>
+    
+    <!-- Utensils -->
+    <g stroke="white" stroke-width="7.68" fill="none" opacity="0.8">
+      <!-- Fork -->
+      <line x1="57.599999999999994" y1="172.8" x2="57.599999999999994" y2="249.60000000000002"/>
+      <line x1="49.92" y1="172.8" x2="49.92" y2="211.20000000000002"/>
+      <line x1="65.28" y1="172.8" x2="65.28" y2="211.20000000000002"/>
+      
+      <!-- Knife -->
+      <line x1="211.20000000000002" y1="172.8" x2="211.20000000000002" y2="249.60000000000002"/>
+      <line x1="203.52" y1="172.8" x2="218.88" y2="188.16"/>
+    </g>
+    
+    <!-- Decorative sparkles -->
+    <g fill="white" opacity="0.6">
+      <circle cx="76.80000000000001" cy="96" r="5.76"/>
+      <circle cx="192" cy="76.80000000000001" r="7.68"/>
+      <circle cx="38.400000000000006" cy="134.39999999999998" r="3.84"/>
+      <circle cx="230.39999999999998" cy="134.39999999999998" r="5.76"/>
+    </g>
+  </g>
+</svg>
